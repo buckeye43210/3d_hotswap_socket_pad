@@ -53,11 +53,25 @@ difference() {
   linear_extrude(height = thickness + 0.1, center = true) {
     for (i = [-(rows-1)/2 : (rows-1)/2]) {
       for (j = [-(cols-1)/2 : (cols-1)/2]) {
-        translate([j * key_spacing, i * key_spacing, 0])
+        translate([j * key_spacing, i * key_spacing, 0]) {
           square(cutout_size, center = true);
+        }
       }
     }
   }
+
+  translate([0, 0, -(thickness/2 - 0.5)]) {
+    linear_extrude(height = thickness/2, center = true) {
+      for (i = [-(rows-1)/2 : (rows-1)/2]) {
+        for (j = [-(cols-1)/2 : (cols-1)/2]) {
+          translate([j * key_spacing, i * key_spacing]) {
+            square(cutout_size + 2.0, center = true);
+          }
+        }
+      }
+    }
+  }
+
   
   // Standoff holes
   translate([cols/2 * key_spacing, 0, 0]) screw_hole();
