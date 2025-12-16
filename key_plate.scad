@@ -60,15 +60,15 @@ difference() {
     }
   }
 
-  // Key switch tab cutouts top
-  translate([0, 0, thickness/2]) {
-    linear_extrude(height = thickness/2, center = true) {
+  // Tab cutouts top
+  translate([0, 0, thickness/4]) { // Adjust z axis value as needed
+    linear_extrude(height = thickness, center = true) {
       for (i = [-(rows-1)/2 : (rows-1)/2]) {
         for (j = [-(cols-1)/2 : (cols-1)/2]) {
-          translate([j * key_spacing, i * key_spacing + cutout_size/2,  2.1]) {
+          translate([j * key_spacing, i * key_spacing + cutout_size/2]) {
             square([4.5, 3.0], center = true);
           }
-          translate([j * key_spacing, i * key_spacing - cutout_size/2, 2.1]) {
+          translate([j * key_spacing, i * key_spacing - cutout_size/2]) {
             square([4.5, 3.0], center = true);
           }
         }
@@ -76,16 +76,16 @@ difference() {
     }
   }
 
-  // Key switch tab cutouts bottom 
-  translate([0, 0, -thickness/2]) {
-    linear_extrude(height = thickness/2, center = true) {
+  // Tab cutouts bottom 
+  translate([0, 0, -thickness/4]) { // Adjust z axis value as needed
+    linear_extrude(height = thickness, center = true) {
       for (i = [-(rows-1)/2 : (rows-1)/2]) {
         for (j = [-(cols-1)/2 : (cols-1)/2]) {
-          translate([j * key_spacing, i * key_spacing + cutout_size/2,  -2.1]) {
-            square([4.5, 3.0], center = true);
+          translate([j * key_spacing, i * key_spacing + cutout_size/2]) {
+            // square([4.5, 3.0], center = true);
           }
-          translate([j * key_spacing, -(i * key_spacing + cutout_size/2), -2.1]) {
-            square([4.5, 3.0], center = true);
+          translate([j * key_spacing, -(i * key_spacing + cutout_size/2)]) {
+            // square([4.5, 3.0], center = true);
           }
         }
       }
