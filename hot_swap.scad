@@ -28,11 +28,12 @@ extra_clearance = 0.1;       // Adjust for perfect socket fit (0.1–0.3 common)
 $fn = 60;
 
 // Socket profile holes (Kailh MX hot-swap specific)
+//        x        y         dia               
 hole1 = [2.5,   -4.05, -0.5, 1.0];   // Right small
-hole2 = [-2.45, -4.05, -0.5, 2.0];   // Central large
+hole2 = [-2.55, -4.15, -0.5, 2.0];   // Central large
 hole3 = [-7.35, -4.05, -0.5, 1.0];   // Left small
-hole4 = [-4.95,  1.25, -0.45, 1.6];  // Upper post
-hole5 = [1.4,   -1.4,  -0.45, 1.4];  // Side hole
+hole4 = [-5.20,  1.00, -0.45, 1.6];  // Upper post
+hole5 = [1.2,   -1.4,  -0.45, 1.4];  // Side hole
 
 // Holder body
 holder_width    = 14.35;
@@ -119,7 +120,7 @@ module side_support() {
             }
         }
         cut_cylinder([2.5,   -4.05, -0.5], 1.0);
-        cut_cylinder([-2.45, -4.05, -0.5], 2.0, h = 5.0);
+        cut_cylinder([-2.55, -4.15, -0.5], 2.0, h = 5.0);
         cut_cylinder([-7.35, -4.05, -base_z], 1.0, h = 3.0);
 
         translate([-4.75, -3.0, -2.25]) rotate([90, 90, 0])
@@ -131,10 +132,10 @@ module side_support() {
         translate([-1.5, 0, 1.85]) cube([16, 8.0, 1.0], center = true);
 
         hull() {
-            for (y = [-3, -4]) for (z = [0, 3])
-                translate([-2.5, y, z]) sphere(r = 1.0);
-            for (y = [-3, -4]) for (z = [0, 3])
-                translate([-10, y, z]) sphere(r = 1.0);
+            for (y = [-3.55, -4.7]) for (z = [0, 2])
+                translate([-2.5, y, z]) sphere(r = 1.5);
+            for (y = [-3.55, -4.7]) for (z = [0, 2])
+                translate([-10, y, z]) sphere(r = 1.5);
         }
 
         hull() {
@@ -152,7 +153,7 @@ module single_socket() {
 
 // === Full Grid Assembly ===
 module mounting_hole() {
-    #translate([0, 0, -plate_thickness]) cylinder(h = plate_thickness + 1.0, d = mount_shaft_diam, center = true);
+    translate([0, 0, -plate_thickness]) cylinder(h = plate_thickness + 1.0, d = mount_shaft_diam, center = true);
     translate([0, 0, plate_thickness/2 - 1.0])
         cylinder(h = 2.2, d = mount_hole_diam, center = true);
 }
@@ -195,4 +196,10 @@ difference() {
         for (p = positions)
             translate([p[0], p[1], 0]) mounting_hole();
     }
+}
+
+translate([-2.5, 0.25, -3.6]) {
+  rotate([90, 0, 0]) {
+      // %import("/home/rholbert/repos/3d_hotswap_socket_pad/1_X_Kailh_Socket_Holder.stl");
+  }
 }
