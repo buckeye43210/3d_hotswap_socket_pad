@@ -60,18 +60,37 @@ difference() {
     }
   }
 
-  translate([0, 0, thickness/2 - 0.5]) {
+  // Key switch tab cutouts top
+  translate([0, 0, thickness/2]) {
     linear_extrude(height = thickness/2, center = true) {
       for (i = [-(rows-1)/2 : (rows-1)/2]) {
         for (j = [-(cols-1)/2 : (cols-1)/2]) {
-          translate([j * key_spacing, i * key_spacing]) {
-            square(cutout_size + 2.0, center = true);
+          translate([j * key_spacing, i * key_spacing + cutout_size/2,  2.1]) {
+            square([4.5, 3.0], center = true);
+          }
+          translate([j * key_spacing, i * key_spacing - cutout_size/2, 2.1]) {
+            square([4.5, 3.0], center = true);
           }
         }
       }
     }
   }
 
+  // Key switch tab cutouts bottom 
+  translate([0, 0, -thickness/2]) {
+    linear_extrude(height = thickness/2, center = true) {
+      for (i = [-(rows-1)/2 : (rows-1)/2]) {
+        for (j = [-(cols-1)/2 : (cols-1)/2]) {
+          translate([j * key_spacing, i * key_spacing + cutout_size/2,  -2.1]) {
+            square([4.5, 3.0], center = true);
+          }
+          translate([j * key_spacing, -(i * key_spacing + cutout_size/2), -2.1]) {
+            square([4.5, 3.0], center = true);
+          }
+        }
+      }
+    }
+  }
   
   // Standoff holes
   translate([cols/2 * key_spacing, 0, 0]) screw_hole();
@@ -80,4 +99,10 @@ difference() {
   translate([-cols/2 * key_spacing, rows/2 * key_spacing]) screw_hole();
   translate([cols/2 * key_spacing, -rows/2 * key_spacing]) screw_hole();
   translate([-cols/2 * key_spacing, -rows/2 * key_spacing]) screw_hole();
+}
+
+translate([-40.5, 60.5, -18]) {
+  rotate([90, 0, 0]) {
+    //import("/home/rholbert/repos/3d_hotswap_socket_pad/4x5_macropad_plate.stl");
+  }
 }
