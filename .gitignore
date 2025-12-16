@@ -1,0 +1,39 @@
+# OpenSCAD generated output files
+*.stl
+*.3mf
+*.off
+*.amf
+*.csg
+*.png          # 2D/3D previews and rendered images
+*.svg
+*.dxf
+*.pdf
+*.eps
+
+# OpenSCAD cache and temporary files
+*.scad~
+*.scad.bak
+*.scad.tmp
+.cache/
+.openscad/
+
+# Exported animations/frames
+frame*.png
+animation*.gif
+
+# Common IDE/editor backups
+*~
+.*.swp
+.*.swo
+
+# macOS junk
+.DS_Store
+
+# Thumbnails (common on Linux)
+.thumbnails/
+
+# If you use custom export directories, add them here (optional examples)
+# exports/
+# renders/
+# stl/
+
