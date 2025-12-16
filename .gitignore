@@ -1,5 +1,5 @@
 # OpenSCAD generated output files
-*.stl
+# *.stl
 *.3mf
 *.off
 *.amf
