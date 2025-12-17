@@ -13,8 +13,8 @@
 // Ideal for mechanical keyboard switch testing, keypads, etc.
 
 // === Grid Parameters ===
-cols = 2;                    // Number of columns
-rows = 6;                    // Number of rows
+cols = 1;                    // Number of columns
+rows = 1;                    // Number of rows
 key_spacing = 19.05;         // Standard MX center-to-center spacing
 
 // === Single Socket Parameters ===
@@ -29,11 +29,17 @@ $fn = 60;
 
 // Socket profile holes (Kailh MX hot-swap specific)
 //        x        y         dia               
-hole1 = [2.5,   -4.05, -0.5, 1.0];   // Right small
+// hole1 = [2.5,   -4.05, -0.5, 1.0];   // Right small
+// hole2 = [-2.55, -4.15, -0.5, 2.0];   // Central large
+// hole3 = [-7.35, -4.05, -0.5, 1.0];   // Left small
+// hole4 = [-5.20,  1.00, -0.45, 1.6];  // Upper post
+// hole5 = [1.2,   -1.4,  -0.45, 1.4];  // Side hole
+
+hole1 = [2.265,   -4.09, -0.5, 0.8];   // Right small
 hole2 = [-2.55, -4.15, -0.5, 2.0];   // Central large
-hole3 = [-7.35, -4.05, -0.5, 1.0];   // Left small
-hole4 = [-5.20,  1.00, -0.45, 1.6];  // Upper post
-hole5 = [1.2,   -1.4,  -0.45, 1.4];  // Side hole
+hole3 = [-7.30, -4.09, -0.5, 0.8];   // Left small
+hole4 = [-5.15,  1.00, -0.45, .6];  // Upper post
+hole5 = [1.3,   -1.6,  -0.45, .5];  // Side hole
 
 // Holder body
 holder_width    = 14.35;
@@ -198,8 +204,8 @@ difference() {
     }
 }
 
-translate([-2.5, 0.25, -3.6]) {
-  rotate([90, 0, 0]) {
-      // %import("/home/rholbert/repos/3d_hotswap_socket_pad/1_X_Kailh_Socket_Holder.stl");
+translate([-2.5, -4.09, -2.75 * plate_thickness]) {
+  rotate([0, 0, 180]) {
+    import("/home/rholbert/repos/3d_hotswap_socket_pad/Unnamed-hotswap mx solderable v7 (Meshed).stl");
   }
 }
