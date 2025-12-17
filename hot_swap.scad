@@ -25,6 +25,10 @@ base_sink = 0.125;           // Slight sink for flush look
 
 extra_clearance = 0.1;       // Adjust for perfect socket fit (0.1–0.3 common)
 
+x_offset = 2.5;
+y_offset = 3.0;
+z_offset = 0.1;
+
 $fn = 60;
 
 hole1 = [2.265,   -4.09, -0.5, 1.0];   // Right small
@@ -52,6 +56,7 @@ mount_hole_diam = 3.6;       // Countersink top diameter
 mount_shaft_diam = 2.2;      // Shaft diameter (for M2 screws)
 
 // === Modules (Single Socket) ===
+
 module cut_cylinder(pos, r, h = total_cut_h, center = true) {
     translate(pos) cylinder(h = h, r = r + extra_clearance, center = center);
 }
@@ -181,15 +186,15 @@ difference() {
                             circle(r = corner_radius);
                 }
           //  Backing plate blank interior
-          translate([0, 0, -1.7 * plate_thickness])
+          #translate([0, 0, -1.7 * plate_thickness])
             linear_extrude(height = 1.5 * plate_thickness)
-               square([cols * key_spacing - border_width/4, rows * key_spacing - border_width/4], center = true); 
+               square([cols * key_spacing - (border_width/4 + x_offset), rows * key_spacing - (border_width/4 + y_offset)], center = true); 
         }
 
         // Grid of sockets
         for (i = [-(rows-1)/2 : (rows-1)/2])
             for (j = [-(cols-1)/2 : (cols-1)/2])
-                translate([j * key_spacing, i * key_spacing, 0])
+                translate([j * key_spacing + x_offset, i * key_spacing + y_offset, z_offset])
                     single_socket();
     }
 
@@ -207,3 +212,5 @@ difference() {
             translate([p[0], p[1], 0]) mounting_hole();
     }
 }
+
+// %translate([0, 0, 0.1]) import("./imported_key_plate.stl");

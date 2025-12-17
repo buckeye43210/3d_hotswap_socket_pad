@@ -101,8 +101,4 @@ difference() {
   translate([-cols/2 * key_spacing, -rows/2 * key_spacing]) screw_hole();
 }
 
-translate([-40.5, 60.5, -18]) {
-  rotate([90, 0, 0]) {
-    //import("/home/rholbert/repos/3d_hotswap_socket_pad/4x5_macropad_plate.stl");
-  }
-}
+%import("imported_key_plate.stl");
