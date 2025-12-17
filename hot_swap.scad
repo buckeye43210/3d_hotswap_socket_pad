@@ -13,8 +13,8 @@
 // Ideal for mechanical keyboard switch testing, keypads, etc.
 
 // === Grid Parameters ===
-cols = 1;                    // Number of columns
-rows = 1;                    // Number of rows
+cols = 2;                    // Number of columns
+rows = 6;                    // Number of rows
 key_spacing = 19.05;         // Standard MX center-to-center spacing
 
 // === Single Socket Parameters ===
@@ -27,17 +27,9 @@ extra_clearance = 0.1;       // Adjust for perfect socket fit (0.1–0.3 common)
 
 $fn = 60;
 
-// Socket profile holes (Kailh MX hot-swap specific)
-//        x        y         dia               
-// hole1 = [2.5,   -4.05, -0.5, 1.0];   // Right small
-// hole2 = [-2.55, -4.15, -0.5, 2.0];   // Central large
-// hole3 = [-7.35, -4.05, -0.5, 1.0];   // Left small
-// hole4 = [-5.20,  1.00, -0.45, 1.6];  // Upper post
-// hole5 = [1.2,   -1.4,  -0.45, 1.4];  // Side hole
-
-hole1 = [2.265,   -4.09, -0.5, 0.8];   // Right small
+hole1 = [2.265,   -4.09, -0.5, 1.0];   // Right small
 hole2 = [-2.55, -4.15, -0.5, 2.0];   // Central large
-hole3 = [-7.30, -4.09, -0.5, 0.8];   // Left small
+hole3 = [-7.30, -4.09, -0.5, 1.0];   // Left small
 hole4 = [-5.15,  1.00, -0.45, .6];  // Upper post
 hole5 = [1.3,   -1.6,  -0.45, .5];  // Side hole
 
@@ -118,16 +110,17 @@ module side_support() {
         union() {
             translate([0.6, -4.0, 0]) cube([2.4, 2.0, 2.75], center = true);
             intersection() {
-                translate([-8.7, -3.75, -base_z]) cube([10.5, 2.6, 3.25], center = false);
+                translate([-8.7, -3.75, -base_z]) cube([10.5, 2.6, 2.825], center = false);
                 hull() {
                     translate([-2.3, -4.05, -0.5]) cylinder(h = 5.0, r = 2.85, center = true);
                     translate([-8.0, -4.05, -0.5]) cylinder(h = 5.0, r = 2.85, center = true);
                 }
             }
         }
-        cut_cylinder([2.5,   -4.05, -0.5], 1.0);
+
+        cut_cylinder([2.265,   -4.09, -0.5], 1.0);
         cut_cylinder([-2.55, -4.15, -0.5], 2.0, h = 5.0);
-        cut_cylinder([-7.35, -4.05, -base_z], 1.0, h = 3.0);
+        cut_cylinder([-7.35, -4.09, -base_z], 1.0, h = 3.0);
 
         translate([-4.75, -3.0, -2.25]) rotate([90, 90, 0])
             hull() {
@@ -135,7 +128,7 @@ module side_support() {
                 translate([-10.0, -4.05, -0.5]) cylinder(h = 3.0, r = 1.0, center = true);
             }
 
-        translate([-1.5, 0, 1.85]) cube([16, 8.0, 1.0], center = true);
+        translate([-2, 2, 1.85]) cube([12, 4.0, 0.95], center = true);
 
         hull() {
             for (y = [-3.55, -4.7]) for (z = [0, 2])
@@ -148,13 +141,24 @@ module side_support() {
             translate([1, -4.7, 0.1])   rotate([0, 90, 0]) cylinder(h = 4.0, r = 1.0, center = true);
             translate([1, -4.7, base_z]) rotate([0, 90, 0]) cylinder(h = 4.0, r = 1.0, center = true);
         }
+      
     }
 }
 
+module chamfer() {
+    // Chamfer top of support bar
+    translate([-2.55, -4.15, 2.95]) sphere(r = 3.14);
+}
+
 module single_socket() {
-    single_base_plate();
-    holder_bar();
-    side_support();
+  difference() {
+    union() {
+      single_base_plate();
+      holder_bar();
+      side_support();
+    }
+    chamfer();
+  }
 }
 
 // === Full Grid Assembly ===
@@ -202,10 +206,4 @@ difference() {
         for (p = positions)
             translate([p[0], p[1], 0]) mounting_hole();
     }
-}
-
-translate([-2.5, -4.09, -2.75 * plate_thickness]) {
-  rotate([0, 0, 180]) {
-    import("/home/rholbert/repos/3d_hotswap_socket_pad/Unnamed-hotswap mx solderable v7 (Meshed).stl");
-  }
 }
