@@ -2,7 +2,7 @@ meta:
   engine: 4.1.0
   name: macropad_2x6
   author: Grok
-  description: Simple 2×6 ortholinear macropad with MX hotswap sockets
+  description: Simple 2×6 ortholinear macropad with MX hotswap sockets and basic 3D case
 
 points:
   zones:
@@ -30,7 +30,7 @@ outlines:
   switch_cutouts:
     - what: rectangle
       where: true
-      size: 13.8
+      size: 14.0
       bound: true
 
   pcb_shape:
@@ -39,7 +39,7 @@ outlines:
         ref: matrix_left_r0
         shift: [-6, -6]
       size: [2U + 12, 6U + 12]
-      corner: 2
+      corner: 5
 
   plate:
     - pcb_shape
@@ -49,25 +49,26 @@ cases:
   bottom:
     - what: outline
       name: pcb_shape
-      extrude: 3.0               # Main bottom thickness (3 mm)
+      extrude: 3.0               # Thick base
     - what: outline
       name: pcb_shape
-      extrude: 1.5               # Raised lip for PCB support
-      offset: -3                 # Inset 3 mm from edge
+      extrude: 1.5               # Raised walls/lip
+      shift: [0, 0, 3.0]          # Position on top of base
+    - what: outline
+      name: pcb_shape
+      extrude: -1.2              # PCB recess
+      shift: [0, 0, 3.0]          # Inside the walls
+      operation: subtract
     - what: outline
       name: switch_cutouts
-      extrude: 1.6               # Slight protrusion for switch alignment
+      extrude: 1.6               # Switch alignment nubs
+      shift: [0, 0, 3.0]          # On the top surface
       operation: add
-    - what: outline
-      name: pcb_shape
-      extrude: -1.2              # Recess for PCB thickness (~1.2 mm typical)
-      offset: -5                 # Slightly larger recess
-      operation: subtract
 
   top:
     - what: outline
       name: plate
-      extrude: 3.0               # Simple top plate (3 mm thick)
+      extrude: 3.0
 
 pcbs:
   macropad_2x6:
@@ -108,6 +109,6 @@ pcbs:
           ref: matrix_right_r5
           shift: [0, -35]
         params:
-          to: RST   # Connect reset button to MCU RST pin
-          from: GND # Connect the other side to ground
+          to: RST
+          from: GND
 
