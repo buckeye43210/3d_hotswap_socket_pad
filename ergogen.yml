@@ -30,7 +30,7 @@ outlines:
   switch_cutouts:
     - what: rectangle
       where: true
-      size: 14.0
+      size: 13.8
       bound: true
 
   pcb_shape:
@@ -39,11 +39,35 @@ outlines:
         ref: matrix_left_r0
         shift: [-6, -6]
       size: [2U + 12, 6U + 12]
-      corner: 5
+      corner: 2
 
   plate:
     - pcb_shape
     - -switch_cutouts
+
+cases:
+  bottom:
+    - what: outline
+      name: pcb_shape
+      extrude: 3.0               # Main bottom thickness (3 mm)
+    - what: outline
+      name: pcb_shape
+      extrude: 1.5               # Raised lip for PCB support
+      offset: -3                 # Inset 3 mm from edge
+    - what: outline
+      name: switch_cutouts
+      extrude: 1.6               # Slight protrusion for switch alignment
+      operation: add
+    - what: outline
+      name: pcb_shape
+      extrude: -1.2              # Recess for PCB thickness (~1.2 mm typical)
+      offset: -5                 # Slightly larger recess
+      operation: subtract
+
+  top:
+    - what: outline
+      name: plate
+      extrude: 3.0               # Simple top plate (3 mm thick)
 
 pcbs:
   macropad_2x6:
