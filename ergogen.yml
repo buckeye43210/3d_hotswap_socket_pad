@@ -4,9 +4,16 @@ meta:
   author: Grok
   description: Simple 2×6 ortholinear macropad with MX hotswap sockets and basic 3D case
 
+units:
+  ks: 24
+  kp: 24
+
 points:
   zones:
     matrix:
+      key:
+        spread: ks
+        padding: kp
       columns:
         left:
           key.column_net: C0
