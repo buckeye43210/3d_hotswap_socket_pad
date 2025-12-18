@@ -30,7 +30,7 @@ outlines:
   switch_cutouts:
     - what: rectangle
       where: true
-      size: 14.0
+      size: 13.8
       bound: true
 
   pcb_shape:
