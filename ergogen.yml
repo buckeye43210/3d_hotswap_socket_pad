@@ -1,0 +1,89 @@
+meta:
+  engine: 4.1.0
+  name: macropad_2x6
+  author: Grok
+  description: Simple 2×6 ortholinear macropad with MX hotswap sockets
+
+points:
+  zones:
+    matrix:
+      columns:
+        left:
+          key.column_net: C0
+        right:
+          key.column_net: C1
+      rows:
+        r0:
+          key.row_net: R0
+        r1:
+          key.row_net: R1
+        r2:
+          key.row_net: R2
+        r3:
+          key.row_net: R3
+        r4:
+          key.row_net: R4
+        r5:
+          key.row_net: R5
+
+outlines:
+  switch_cutouts:
+    - what: rectangle
+      where: true
+      size: 14.0
+      bound: true
+
+  pcb_shape:
+    - what: rectangle
+      adjust:
+        ref: matrix_left_r0
+        shift: [-6, -6]
+      size: [2U + 12, 6U + 12]
+      corner: 5
+
+  plate:
+    - pcb_shape
+    - -switch_cutouts
+
+pcbs:
+  macropad_2x6:
+    template: kicad8
+    outlines:
+      Edge_Cuts:
+        outline: plate
+    footprints:
+      switches:
+        what: ceoloide/switch_mx
+        where: true
+        params:
+          hotswap: true
+          from: "{{colrow}}"
+          to: "{{column_net}}"
+          include_keycap: true
+
+      diodes:
+        what: ceoloide/diode_tht_sod123
+        where: true
+        adjust:
+          shift: [0, -4.7]
+          rotate: 180
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+
+      mcu:
+        what: promicro
+        where:
+          ref: matrix_right_r5
+          shift: [0, -25]
+          rotate: 180
+
+      reset:
+        what: button
+        where:
+          ref: matrix_right_r5
+          shift: [0, -35]
+        params:
+          to: RST   # Connect reset button to MCU RST pin
+          from: GND # Connect the other side to ground
+
