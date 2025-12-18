@@ -1,8 +1,10 @@
+---
+
 meta:
   engine: 4.1.0
   name: macropad_2x6
   author: Grok
-  description: Simple 2×6 ortholinear macropad with MX hotswap sockets and basic 3D case
+  description: Simple 2×6 ortholinear macropad with MX hotswap sockets
 
 units:
   ks: 24
@@ -46,7 +48,7 @@ outlines:
         ref: matrix_left_r0
         shift: [-6, -6]
       size: [2U + 12, 6U + 12]
-      corner: 5
+      corner: 3
 
   plate:
     - pcb_shape
@@ -118,4 +120,3 @@ pcbs:
         params:
           to: RST
           from: GND
-
